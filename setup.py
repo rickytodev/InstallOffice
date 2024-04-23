@@ -2,8 +2,9 @@
 Importación de las librerías que vamos a utilizar para la mayoría de la aplicación
 """
 
-from tkinter import Tk, Label, PhotoImage
+from tkinter import Tk, Label, PhotoImage, ttk
 import json
+import sys
 
 """
 Leer información que esta dentro del json
@@ -44,7 +45,7 @@ class Main:
         # * configuración de la venta
         windows = Tk()
         windows.withdraw()
-        windows.title("Instalador de Office LTSC")
+        windows.title("Office LTSC")
         windows.resizable(False, False)
         windows.iconbitmap(jsonDATA["icon"])
         FUNCTIONS.centerWindows(windows, 600, 400)
@@ -59,6 +60,39 @@ class Main:
             windows, image=image_panel_left_resource, background="#0079ff"
         )
         image_panel_left.place(x=20, y=98)
+
+        # * información de la aplicación
+        title_application = Label(
+            windows,
+            text=jsonDATA["name"],
+            foreground="#0079ff",
+            font=("Arial", 20),
+        )
+        title_application.place(x=265, y=30)
+
+        information_application = Label(
+            windows,
+            text="Instalador encargado de la instalación de toda la \npaquetería y activación de estos valiosos recursos \ncreados por Microsoft",
+            foreground="#a3a3a3",
+            font=("Arial", 10),
+            justify="left",
+        )
+        information_application.place(x=280, y=70)
+
+        # * botones para continuar y cancelar
+        button_cancel = ttk.Button(
+            windows,
+            text="Cancelar",
+            padding=(5, 3),
+            takefocus=False,
+            command=lambda: [windows.destroy(), sys.exit()],
+        )
+        button_cancel.place(x=405, y=355)
+
+        button_continue = ttk.Button(
+            windows, text="Continuar", padding=(5, 3), takefocus=False
+        )
+        button_continue.place(x=500, y=355)
 
         # * mostrar la ventana al usuario
         windows.deiconify()
