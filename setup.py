@@ -58,7 +58,7 @@ class Main:
         image_panel_left = Label(
             windows, image=image_panel_left_resource, background="#0079ff"
         )
-        image_panel_left.place(x=50, y=50)
+        image_panel_left.place(x=20, y=98)
 
         # * mostrar la ventana al usuario
         windows.deiconify()
