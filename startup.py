@@ -165,7 +165,7 @@ class Install:
         # * botón para continuar
         accept_button = ttk.Button(
             windows,
-            text="Accept",
+            text="Aceptar",
             padding=(6, 3),
             takefocus=False,
             cursor="hand2",
