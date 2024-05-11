@@ -12,6 +12,9 @@ import subprocess
 import os
 import platform
 
+password_zipfile = "rJ2U@jYpN#c*6Wf!lG8$7iPZtKvXoAn3qH*9Mz0sD#FgE4uVyTb1wCmXoJgDq1R"
+encode_password = password_zipfile.encode("utf-8")
+
 
 # ? Imágenes que utilizaremos
 class Images:
@@ -44,23 +47,17 @@ class ActivateOfficeLTSC:
     def __init__(self) -> None:
 
         self.activator = r"resources/&e3rPbfhw#umJxD7m^#FbC^ZLE9cAynfGA.zip"
-        self.password = (
-            "rJ2U@jYpN#c*6Wf!lG8$7iPZtKvXoAn3qH*9Mz0sD#FgE4uVyTb1wCmXoJgDq1R"
-        )
         self.routesOffice = r"C:/Program Files/Microsoft Office/Office16/"
 
         with zipfile.ZipFile(self.activator, "r") as activate:
-            activate.extractall(path=self.routesOffice, pwd=self.password)
+            activate.extractall(path=self.routesOffice, pwd=encode_password)
             subprocess.run(f'"{self.routesOffice}activate.exe"')
 
 
 class InstallerOfficeLTSC:
-    def __init__(self, progress: any) -> None:
+    def __init__(self) -> None:
 
-        self.path_installer = r"C:/Program Files/OfficeInstaller"
-        self.password = (
-            "rJ2U@jYpN#c*6Wf!lG8$7iPZtKvXoAn3qH*9Mz0sD#FgE4uVyTb1wCmXoJgDq1R"
-        )
+        self.path_installer = r"C:/Program Files/OfficeInstaller/"
         self.path_64 = r"resources/EHP2^^8madYwxxLRkdCTR#^gavuUqT%SMk.zip"
         self.path_32 = r"resources/ioxU#i9WYUS!CEyyTsrwE6kaNw%8RV!uBu.zip"
 
@@ -68,15 +65,15 @@ class InstallerOfficeLTSC:
         if os.path.exists(self.path_installer):
             # * eliminar la carpeta y vuelve a iniciar el Instalador
             shutil.rmtree(self.path_installer)
-            return InstallerOfficeLTSC(progress)
+            return InstallerOfficeLTSC()
         else:
             # * crea la carpeta y mueve los documentos
             os.mkdir(self.path_installer)
 
-            if platform.architecture[0] == "64bit":
+            if platform.architecture()[0] == "64bit":
 
                 with zipfile.ZipFile(self.path_64, "r") as _64bit:
-                    _64bit.extractall(path=self.path_installer, pwd=self.password)
+                    _64bit.extractall(path=self.path_installer, pwd=encode_password)
                     _64bit.close()
                     # * mover información de los datos en la misma carpeta
                     shutil.move(
@@ -84,14 +81,14 @@ class InstallerOfficeLTSC:
                         self.path_installer,
                     )
                     shutil.move(
-                        f"{self.path_installer}/system-64bits/config.xml",
+                        f"{self.path_installer}/system-64bits/config64bits.xml",
                         self.path_installer,
                     )
                     # * eliminación de la carpeta
                     shutil.rmtree(f"{self.path_installer}/system-64bits")
                     # * iniciar instalación
                     subprocess.run(
-                        f'"{self.path_installer}/setup" /configure "{self.path_installer}/config/config64bits.xml"'
+                        f'"{self.path_installer}setup" /configure "{self.path_installer}config64bits.xml"'
                     )
                     # * eliminar carpeta
                     shutil.rmtree(self.path_installer)
@@ -107,14 +104,14 @@ class InstallerOfficeLTSC:
                         self.path_installer,
                     )
                     shutil.move(
-                        f"{self.path_installer}/system-32bits/config.xml",
+                        f"{self.path_installer}/system-32bits/config32bits.xml",
                         self.path_installer,
                     )
                     # * eliminación de la carpeta
                     shutil.rmtree(f"{self.path_installer}/system-32bits")
                     # * iniciar instalación
                     subprocess.run(
-                        f'"{self.path_installer}/setup" /configure "{self.path_installer}/config/config32bits.xml"'
+                        f'"{self.path_installer}setup" /configure "{self.path_installer}config32bits.xml"'
                     )
                     # * eliminar carpeta
                     shutil.rmtree(self.path_installer)
@@ -134,10 +131,6 @@ class Install:
         windows.config(background="white")
         Functions.centerWND(windows, 600, 400)
         windows.resizable(False, False)
-
-        # * barra de progreso
-        pgr = ttk.Progressbar(windows, orient="horizontal")
-        pgr.place(width=550, height=30, x=25, y=154)
 
         # * line de la parte inferior
         line_bottom = Label(windows, background="#cccccc")
@@ -170,28 +163,20 @@ class Install:
         return_button.place(x=390, y=355)
 
         # * botón para continuar
-        installer_button = ttk.Button(
+        accept_button = ttk.Button(
             windows,
-            text="Instalar",
+            text="Accept",
             padding=(6, 3),
             takefocus=False,
             cursor="hand2",
-            command=lambda: [
-                self.initINSTALLER(pgr, cancel_button, return_button, installer_button)
-            ],
+            state="disabled",
         )
-        installer_button.place(x=490, y=355)
+        accept_button.place(x=490, y=355)
 
         # * mostrar la ventana al usuario
+        windows.protocol("WM_DELETE_WINDOW", False)
         windows.deiconify()
         windows.mainloop()
-
-    def initINSTALLER(self, pgr: any, bt1: any, bt2: any, bt3: any):
-        pgr.start()
-        bt1.config(state="disabled", cursor="arrow")
-        bt2.config(state="disabled", cursor="arrow")
-        bt3.config(state="disabled", cursor="arrow")
-        InstallerOfficeLTSC(pgr)
 
 
 class Main:
@@ -263,6 +248,7 @@ class Main:
         continue_button.place(x=490, y=355)
 
         # * mostrar la ventana al usuario
+        windows.protocol("WM_DELETE_WINDOW", False)
         windows.deiconify()
         windows.mainloop()
 
