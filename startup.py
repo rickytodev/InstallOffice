@@ -60,6 +60,7 @@ class ActivateOfficeLTSC:
         with zipfile.ZipFile(self.activator, "r") as activate:
             activate.extractall(path=self.routesOffice, pwd=encode_password)
             subprocess.run(f'"{self.routesOffice}activate.exe"')
+            Finish()
 
 
 class InstallerOfficeLTSC:
