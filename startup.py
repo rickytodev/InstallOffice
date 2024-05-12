@@ -43,6 +43,14 @@ class Functions:
 
 
 # ? Instalación y activación
+
+
+class ReactivateLTSC:
+    def __init__(self) -> None:
+        self.routesOffice = r"C:/Program Files/Microsoft Office/Office16/"
+        subprocess.run(f'"{self.routesOffice}activate.exe"')
+
+
 class ActivateOfficeLTSC:
     def __init__(self) -> None:
 
@@ -92,6 +100,8 @@ class InstallerOfficeLTSC:
                     )
                     # * eliminar carpeta
                     shutil.rmtree(self.path_installer)
+                    # * abrir activación
+                    Activation()
 
             else:
 
@@ -115,9 +125,172 @@ class InstallerOfficeLTSC:
                     )
                     # * eliminar carpeta
                     shutil.rmtree(self.path_installer)
+                    # * abrir activación
+                    Activation()
 
 
 # ? Apartado inicial de la aplicación
+
+
+class Finish:
+    def __init__(self) -> None:
+        # * configurar la ventana que mostraremos al usuario
+        windows = Tk()
+        windows.withdraw()
+        windows.title(
+            f"https://rickytodev.vercel.app/webpages&applications/{_json['application']}"
+        )
+        icon = PhotoImage(data=IMG.icon.content)
+        windows.iconphoto(False, icon)
+        windows.config(background="white")
+        Functions.centerWND(windows, 600, 400)
+        windows.resizable(False, False)
+
+        # * opción de color morado
+
+        option_violet = Label(
+            windows,
+            background="#ccd0ff",
+            text="Checa si se activo la paquearía de office abriendo una de las aplicaciones de la \npaquetería y dirígete al apartado de la cuenta, en donde dice información del \nproducto debe de decir Producto Activado\n\n1.Si no se activo el Office presiona el botón de 'reactivar'.\n\n2. Si ya esta activado el Office presiona el botón 'finalizar'",
+            font=("Arial", 10),
+            justify="left",
+        )
+        option_violet.place(width=500, height=150, x=50, y=50)
+        border_option_violet = Label(windows, background="#4b53bc")
+        border_option_violet.place(width=4, height=150, x=50, y=50)
+
+        # * line de la parte inferior
+        line_bottom = Label(windows, background="#cccccc")
+        line_bottom.place(width=600, height=1, y=338)
+
+        # * panel inferior
+        panel_bottom = Label(windows, background="#f0f0f0")
+        panel_bottom.place(width=600, height=60, y=340)
+
+        # * botón para reactivar
+        reactivate_button = ttk.Button(
+            windows,
+            text="Reactivar",
+            padding=(6, 3),
+            takefocus=False,
+            cursor="hand2",
+            command=lambda: [ReactivateLTSC()],
+        )
+        reactivate_button.place(x=390, y=355)
+
+        # * botón para finalizar
+        finish_button = ttk.Button(
+            windows,
+            text="Finalizar",
+            padding=(6, 3),
+            takefocus=False,
+            cursor="hand2",
+            command=lambda: [windows.destroy()],
+        )
+        finish_button.place(x=490, y=355)
+        # * mostrar la ventana al usuario
+        windows.protocol("WM_DELETE_WINDOW", False)
+        windows.deiconify()
+        windows.mainloop()
+
+
+class Activation:
+    def __init__(self) -> None:
+        # * configurar la ventana que mostraremos al usuario
+        windows = Tk()
+        windows.withdraw()
+        windows.title(
+            f"https://rickytodev.vercel.app/webpages&applications/{_json['application']}"
+        )
+        icon = PhotoImage(data=IMG.icon.content)
+        windows.iconphoto(False, icon)
+        windows.config(background="white")
+        Functions.centerWND(windows, 600, 400)
+        windows.resizable(False, False)
+
+        # * información
+
+        information = Label(
+            windows,
+            text="El apartado que este de color 'verde' es la acción que se va a ejecutar,si estas en acuerdo con \nlo que dice el apartado, presiona aceptar.",
+            font=("Arial", 10),
+            justify="left",
+            background="white",
+        )
+        information.place(x=22, y=20)
+
+        # * opción de color red
+
+        option_red = Label(
+            windows,
+            background="#ff9e9e",
+            text="[ Instalación ]\n\nComenzara la instalación de la aplicación por medio de un comando propio por \nlo que si aparece un CMD ntp es normal ya que el programa asi lo ejecutara.",
+            font=("Arial", 10),
+            justify="left",
+        )
+        option_red.place(width=500, height=100, x=50, y=80)
+        border_option_red = Label(windows, background="red")
+        border_option_red.place(width=4, height=100, x=50, y=80)
+
+        # * opción de color verde
+
+        option_green = Label(
+            windows,
+            background="#aedfbf",
+            text="[ Activación ]\n\nEste proceso tardara unos segundo por lo que no inicies la paquetería hasta que \nse active;si no se activa vuelve a presionar en activar; si la activación \nfue correcta presiona en finalizar.",
+            font=("Arial", 10),
+            justify="left",
+        )
+        option_green.place(width=500, height=100, x=50, y=210)
+        border_option_green = Label(windows, background="#17ac4d")
+        border_option_green.place(width=4, height=100, x=50, y=210)
+
+        # * line de la parte inferior
+        line_bottom = Label(windows, background="#cccccc")
+        line_bottom.place(width=600, height=1, y=338)
+
+        # * panel inferior
+        panel_bottom = Label(windows, background="#f0f0f0")
+        panel_bottom.place(width=600, height=60, y=340)
+
+        # * botón para cancelar
+        cancel_button = ttk.Button(
+            windows,
+            text="Cancelar",
+            padding=(6, 3),
+            takefocus=False,
+            command=lambda: [windows.destroy()],
+            cursor="hand2",
+        )
+        cancel_button.place(x=26, y=355)
+
+        # * botón para regresar
+        return_button = ttk.Button(
+            windows,
+            text="Regresar",
+            padding=(6, 3),
+            takefocus=False,
+            cursor="hand2",
+            command=lambda: [windows.destroy(), Install()],
+        )
+        return_button.place(x=390, y=355)
+
+        # * botón para continuar
+        accept_button = ttk.Button(
+            windows,
+            text="Aceptar",
+            padding=(6, 3),
+            takefocus=False,
+            cursor="hand2",
+            command=lambda: [windows.destroy(), ActivateOfficeLTSC()],
+        )
+        accept_button.place(x=490, y=355)
+        # * mostrar la ventana al usuario
+        windows.protocol("WM_DELETE_WINDOW", False)
+        windows.deiconify()
+        windows.mainloop()
+
+
 class Install:
     def __init__(self) -> None:
         # * configurar la ventana que mostraremos al usuario
@@ -131,6 +304,43 @@ class Install:
         windows.config(background="white")
         Functions.centerWND(windows, 600, 400)
         windows.resizable(False, False)
+
+        # * información
+
+        information = Label(
+            windows,
+            text="El apartado que este de color 'verde' es la acción que se va a ejecutar,si estas en acuerdo con \nlo que dice el apartado, presiona aceptar.",
+            font=("Arial", 10),
+            justify="left",
+            background="white",
+        )
+        information.place(x=22, y=20)
+
+        # * opción de color verde
+
+        option_green = Label(
+            windows,
+            background="#aedfbf",
+            text="[ Instalación ]\n\nComenzara la instalación de la aplicación por medio de un comando propio por \nlo que si aparece un CMD ntp es normal ya que el programa asi lo ejecutara.",
+            font=("Arial", 10),
+            justify="left",
+        )
+        option_green.place(width=500, height=100, x=50, y=80)
+        border_option_green = Label(windows, background="#17ac4d")
+        border_option_green.place(width=4, height=100, x=50, y=80)
+
+        # * opción de color red
+
+        option_red = Label(
+            windows,
+            background="#ff9e9e",
+            text="[ Activación ]\n\nEste proceso tardara unos segundo por lo que no inicies la paquetería hasta que \nse active;si no se activa vuelve a presionar en activar; si la activación \nfue correcta presiona en finalizar.",
+            font=("Arial", 10),
+            justify="left",
+        )
+        option_red.place(width=500, height=100, x=50, y=210)
+        border_option_red = Label(windows, background="red")
+        border_option_red.place(width=4, height=100, x=50, y=210)
 
         # * line de la parte inferior
         line_bottom = Label(windows, background="#cccccc")
@@ -169,7 +379,7 @@ class Install:
             padding=(6, 3),
             takefocus=False,
             cursor="hand2",
-            state="disabled",
+            command=lambda: [windows.destroy(), InstallerOfficeLTSC()],
         )
         accept_button.place(x=490, y=355)
 
@@ -197,7 +407,7 @@ class Main:
         bck_terms = Label(windows, background="#cccccc")
         bck_terms.place(width=550, height=250, x=25, y=25)
 
-        terms = Text(windows, background="white", borderwidth=0)
+        terms = Text(windows, background="white", borderwidth=0, font=("Arial", 10))
         terms.place(width=548, height=248, x=26, y=26)
         terms.insert("1.0", _json["terms_conditions"])
         terms.config(state="disabled")
