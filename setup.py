@@ -24,60 +24,63 @@ def remove_files():
     return True
 
 
-if remove_files() == True:
-    # configure message
-    i = 1
+# remove before installations
+remove_files()
 
-    # ? message
-    print(f"[{i}] Ready for install new update")
 
-    # create new file
-    os.mkdir(f)
+# configure message
+i = 1
 
-    # ? message
-    i += 1
-    print(f"[{i}] New file is create")
+# ? message
+print(f"[{i}] Ready for install new update")
 
-    # export .zip in the file
-    with zipfile.ZipFile("tools/リソース.zip", "r") as zip_extract:
-        zip_extract.extractall(path=f, pwd=KEY)
+# create new file
+os.mkdir(f)
 
-    # configure break
-    time.sleep(1)
+# ? message
+i += 1
+print(f"[{i}] New file is create")
 
-    # ? message
-    i += 1
-    print(f"[{i}] Extract correctly the リソース.zip")
+# export .zip in the file
+with zipfile.ZipFile("tools/リソース.zip", "r") as zip_extract:
+    zip_extract.extractall(path=f, pwd=KEY)
 
-    # ? message
-    i += 1
-    print(f"[{i}] Init installation for architecture the {platform.architecture()[0]}")
+# configure break
+time.sleep(1)
 
-    # init install
-    r = f + platform.architecture()[0]
-    command = f'"{r}/setup" /configure "{r}/config{platform.architecture()[0]}s.xml"'
-    subprocess.run(command, shell=False)
+# ? message
+i += 1
+print(f"[{i}] Extract correctly the リソース.zip")
 
-    # ? message
-    i += 1
-    print(f"[{i}] Installation the Office LTSC is complete")
+# ? message
+i += 1
+print(f"[{i}] Init installation for architecture the {platform.architecture()[0]}")
 
-    # activation
-    subprocess.run(
-        f"{r}/activate{platform.architecture()[0]}.cmd",
-        check=True,
-        shell=True,
-        capture_output=True,
-        text=True,
-    )
+# init install
+r = f + platform.architecture()[0]
+command = f'"{r}/setup" /configure "{r}/config{platform.architecture()[0]}s.xml"'
+subprocess.run(command, shell=False)
 
-    # ? message
-    i += 1
-    print(f"[{i}] Activation the OfficeLTSC is complete")
+# ? message
+i += 1
+print(f"[{i}] Installation the Office LTSC is complete")
 
-    # remove installation
-    remove_files()
+# activation
+subprocess.run(
+    f"{r}/activate{platform.architecture()[0]}.cmd",
+    check=True,
+    shell=True,
+    capture_output=True,
+    text=True,
+)
 
-    # ? message
-    i += 1
-    print(f"[{i}] Remove files the installation is complete")
+# ? message
+i += 1
+print(f"[{i}] Activation the OfficeLTSC is complete")
+
+# remove installation
+remove_files()
+
+# ? message
+i += 1
+print(f"[{i}] Remove files the installation is complete")
