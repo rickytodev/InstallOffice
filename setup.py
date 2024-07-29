@@ -1,10 +1,10 @@
+import json
 import os
+import platform
 import shutil
 import subprocess
 import zipfile
-import time
-import platform
-
+from tkinter import Tk, Label, PhotoImage
 
 # import passkey
 with open("tools/パスジップ.key", "r") as data:
@@ -12,75 +12,153 @@ with open("tools/パスジップ.key", "r") as data:
     KEY = k.encode("utf-8")
 
 # file installer
-f = "C:/OfficeLTSC/"
+file_install = "C:/OfficeLTSC/"
+
+# data the json
+with open('tools/settings.json', 'r') as file:
+    DATA = json.load(file)
 
 
-# remove before files the updates
+def center_window(win: any, wd: int, hg: int):
+    x = (win.winfo_screenwidth() - wd) // 2
+    y = (win.winfo_screenheight() - hg) // 2
+    win.geometry(f'{wd}x{hg}+{x}+{y}')
+
+
 def remove_files():
-    if os.path.exists(f):
-        shutil.rmtree(f)
+    if os.path.exists(file_install):
+        shutil.rmtree(file_install)
         return True
 
     return True
 
 
-# remove before installations
-remove_files()
+def remove_installation():
+    remove_files()
+    exit()
 
 
-# configure message
-i = 1
+def create_new_file_install():
+    remove_files()
+    os.mkdir(file_install)
+    with zipfile.ZipFile("tools/リソース.zip", "r") as zip_extract:
+        zip_extract.extractall(path=file_install, pwd=KEY)
+        return True
 
-# ? message
-print(f"[{i}] Ready for install new update")
 
-# create new file
-os.mkdir(f)
+def install():
+    create_new_file_install()
+    r = file_install + platform.architecture()[0]
+    command = f'"{r}/setup" /configure "{r}/config{platform.architecture()[0]}s.xml"'
+    subprocess.run(command, shell=False)
+    subprocess.run(
+        f"{r}/activate{platform.architecture()[0]}.cmd",
+        check=True,
+        shell=True,
+        capture_output=True,
+        text=True,
+    )
+    Finish()
 
-# ? message
-i += 1
-print(f"[{i}] New file is create")
 
-# export .zip in the file
-with zipfile.ZipFile("tools/リソース.zip", "r") as zip_extract:
-    zip_extract.extractall(path=f, pwd=KEY)
+class Finish:
+    def __init__(self):
+        # configure window for use in display the user
+        window = Tk()
+        window.withdraw()
+        window.overrideredirect(True)
+        center_window(window, 652, 452)
+        window.attributes('-topmost', True)
 
-# configure break
-time.sleep(1)
+        # border
+        border_win = Label(window, bg='#cccccc')
+        border_win.place(width=652, height=452)
 
-# ? message
-i += 1
-print(f"[{i}] Extract correctly the リソース.zip")
+        # background
+        background_win = Label(window, bg='white')
+        background_win.place(width=650, height=450, x=1, y=1)
 
-# ? message
-i += 1
-print(f"[{i}] Init installation for architecture the {platform.architecture()[0]}")
+        # config information
+        name = Label(window, text=DATA['name'], font=('Arial', 25), bg='white')
+        name.place(x=20, y=30)
 
-# init install
-r = f + platform.architecture()[0]
-command = f'"{r}/setup" /configure "{r}/config{platform.architecture()[0]}s.xml"'
-subprocess.run(command, shell=False)
+        publisher_img = PhotoImage(file='resources/publisher.png')
+        publisher = Label(window, text=f' Publisher - {DATA['publisher']}', font=('Arial', 11), bg='white',
+                          image=publisher_img, compound='left')
+        publisher.place(x=20, y=100)
 
-# ? message
-i += 1
-print(f"[{i}] Installation the Office LTSC is complete")
+        version_img = PhotoImage(file='resources/version.png')
+        version = Label(window, text=f' Version - {DATA['version']}', font=('Arial', 11), bg='white', image=version_img,
+                        compound='left')
+        version.place(x=20, y=132)
 
-# activation
-subprocess.run(
-    f"{r}/activate{platform.architecture()[0]}.cmd",
-    check=True,
-    shell=True,
-    capture_output=True,
-    text=True,
-)
+        # image the logo
+        logo_img = PhotoImage(file='resources/logo.png')
+        logo = Label(window, image=logo_img, borderwidth=0, bg='white')
+        logo.place(x=500, y=30)
 
-# ? message
-i += 1
-print(f"[{i}] Activation the OfficeLTSC is complete")
+        # buttons actions
+        button_finish = Label(window, text='Finish', font=('Arial', 12), bg='#eb3b00', fg='white', borderwidth=0,
+                              cursor='hand2')
+        button_finish.place(width=130, height=40, x=500, y=390)
+        button_finish.bind('<ButtonPress-1>', lambda event: (window.destroy(), remove_installation()))
 
-# remove installation
-remove_files()
+        # view window
+        window.deiconify()
+        window.mainloop()
 
-# ? message
-i += 1
-print(f"[{i}] Remove files the installation is complete")
+
+class Main:
+    def __init__(self):
+        # configure window for use in display the user
+        window = Tk()
+        window.withdraw()
+        window.overrideredirect(True)
+        center_window(window, 652, 452)
+        window.attributes('-topmost', True)
+
+        # border
+        border_win = Label(window, bg='#cccccc')
+        border_win.place(width=652, height=452)
+
+        # background
+        background_win = Label(window, bg='white')
+        background_win.place(width=650, height=450, x=1, y=1)
+
+        # config information
+        name = Label(window, text=DATA['name'], font=('Arial', 25), bg='white')
+        name.place(x=20, y=30)
+
+        publisher_img = PhotoImage(file='resources/publisher.png')
+        publisher = Label(window, text=f' Publisher - {DATA['publisher']}', font=('Arial', 11), bg='white',
+                          image=publisher_img, compound='left')
+        publisher.place(x=20, y=100)
+
+        version_img = PhotoImage(file='resources/version.png')
+        version = Label(window, text=f' Version - {DATA['version']}', font=('Arial', 11), bg='white', image=version_img,
+                        compound='left')
+        version.place(x=20, y=132)
+
+        # image the logo
+        logo_img = PhotoImage(file='resources/logo.png')
+        logo = Label(window, image=logo_img, borderwidth=0, bg='white')
+        logo.place(x=500, y=30)
+
+        # buttons actions
+        button_cancel = Label(window, text='Cancel', font=('Arial', 12), bg='#e4e4e4', fg='black', borderwidth=0,
+                              cursor='hand2')
+        button_cancel.place(width=130, height=40, x=350, y=390)
+        button_cancel.bind('<ButtonPress-1>', lambda event: remove_installation())
+
+        button_install = Label(window, text='Install', font=('Arial', 12), bg='#eb3b00', fg='white', borderwidth=0,
+                               cursor='hand2')
+        button_install.place(width=130, height=40, x=500, y=390)
+        button_install.bind('<ButtonPress-1>', lambda event: (window.destroy(), install()))
+
+        # view window
+        window.deiconify()
+        window.mainloop()
+
+
+if __name__ == '__main__':
+    Main()
