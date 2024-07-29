@@ -4,6 +4,7 @@ import platform
 import shutil
 import subprocess
 import zipfile
+import sys
 from tkinter import Tk, Label, PhotoImage
 
 
@@ -35,7 +36,7 @@ def remove_files():
 
 def remove_installation():
     remove_files()
-    exit()
+    sys.exit()
 
 
 def create_new_file_install():
@@ -190,7 +191,9 @@ class Main:
             cursor="hand2",
         )
         button_cancel.place(width=130, height=40, x=350, y=390)
-        button_cancel.bind("<ButtonPress-1>", lambda event: remove_installation())
+        button_cancel.bind(
+            "<ButtonPress-1>", lambda event: [window.destroy(), sys.exit()]
+        )
 
         button_install = Label(
             window,
