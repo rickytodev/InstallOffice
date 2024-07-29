@@ -15,14 +15,14 @@ with open("tools/パスジップ.key", "r") as data:
 file_install = "C:/OfficeLTSC/"
 
 # data the json
-with open('tools/settings.json', 'r') as file:
+with open("tools/settings.json", "r") as file:
     DATA = json.load(file)
 
 
 def center_window(win: any, wd: int, hg: int):
     x = (win.winfo_screenwidth() - wd) // 2
     y = (win.winfo_screenheight() - hg) // 2
-    win.geometry(f'{wd}x{hg}+{x}+{y}')
+    win.geometry(f"{wd}x{hg}+{x}+{y}")
 
 
 def remove_files():
@@ -49,7 +49,8 @@ def create_new_file_install():
 def install():
     create_new_file_install()
     r = file_install + platform.architecture()[0]
-    command = f'"{r}/setup" /configure "{r}/config{platform.architecture()[0]}s.xml"'
+    command = f'"{
+        r}/setup" /configure "{r}/config{platform.architecture()[0]}s.xml"'
     subprocess.run(command, shell=False)
     subprocess.run(
         f"{r}/activate{platform.architecture()[0]}.cmd",
@@ -65,40 +66,61 @@ class Finish:
         window.withdraw()
         window.overrideredirect(True)
         center_window(window, 652, 452)
-        window.attributes('-topmost', True)
+        window.attributes("-topmost", True)
 
         # border
-        border_win = Label(window, bg='#cccccc')
+        border_win = Label(window, bg="#cccccc")
         border_win.place(width=652, height=452)
 
         # background
-        background_win = Label(window, bg='white')
+        background_win = Label(window, bg="white")
         background_win.place(width=650, height=450, x=1, y=1)
 
         # config information
-        name = Label(window, text=DATA['name'], font=('Arial', 25), bg='white')
+        name = Label(window, text=DATA["name"], font=("Arial", 25), bg="white")
         name.place(x=20, y=30)
 
-        publisher_img = PhotoImage(file='resources/publisher.png')
-        publisher = Label(window, text=f' Publisher - {DATA['publisher']}', font=('Arial', 11), bg='white',
-                          image=publisher_img, compound='left')
+        publisher_img = PhotoImage(file="resources/publisher.png")
+        publisher = Label(
+            window,
+            text=f" Publisher - {DATA['publisher']}",
+            font=("Arial", 11),
+            bg="white",
+            image=publisher_img,
+            compound="left",
+        )
         publisher.place(x=20, y=100)
 
-        version_img = PhotoImage(file='resources/version.png')
-        version = Label(window, text=f' Version - {DATA['version']}', font=('Arial', 11), bg='white', image=version_img,
-                        compound='left')
+        version_img = PhotoImage(file="resources/version.png")
+        version = Label(
+            window,
+            text=f" Version - {DATA['version']}",
+            font=("Arial", 11),
+            bg="white",
+            image=version_img,
+            compound="left",
+        )
         version.place(x=20, y=132)
 
         # image the logo
-        logo_img = PhotoImage(file='resources/logo.png')
-        logo = Label(window, image=logo_img, borderwidth=0, bg='white')
+        logo_img = PhotoImage(file="resources/logo.png")
+        logo = Label(window, image=logo_img, borderwidth=0, bg="white")
         logo.place(x=500, y=30)
 
         # buttons actions
-        button_finish = Label(window, text='Finish', font=('Arial', 12), bg='#eb3b00', fg='white', borderwidth=0,
-                              cursor='hand2')
+        button_finish = Label(
+            window,
+            text="Finish",
+            font=("Arial", 12),
+            bg="#eb3b00",
+            fg="white",
+            borderwidth=0,
+            cursor="hand2",
+        )
         button_finish.place(width=130, height=40, x=500, y=390)
-        button_finish.bind('<ButtonPress-1>', lambda event: (window.destroy(), remove_installation()))
+        button_finish.bind(
+            "<ButtonPress-1>", lambda event: (window.destroy(), remove_installation())
+        )
 
         # view window
         window.deiconify()
@@ -112,50 +134,78 @@ class Main:
         window.withdraw()
         window.overrideredirect(True)
         center_window(window, 652, 452)
-        window.attributes('-topmost', True)
+        window.attributes("-topmost", True)
 
         # border
-        border_win = Label(window, bg='#cccccc')
+        border_win = Label(window, bg="#cccccc")
         border_win.place(width=652, height=452)
 
         # background
-        background_win = Label(window, bg='white')
+        background_win = Label(window, bg="white")
         background_win.place(width=650, height=450, x=1, y=1)
 
         # config information
-        name = Label(window, text=DATA['name'], font=('Arial', 25), bg='white')
+        name = Label(window, text=DATA["name"], font=("Arial", 25), bg="white")
         name.place(x=20, y=30)
 
-        publisher_img = PhotoImage(file='resources/publisher.png')
-        publisher = Label(window, text=f' Publisher - {DATA['publisher']}', font=('Arial', 11), bg='white',
-                          image=publisher_img, compound='left')
+        publisher_img = PhotoImage(file="resources/publisher.png")
+        publisher = Label(
+            window,
+            text=f" Publisher - {DATA['publisher']}",
+            font=("Arial", 11),
+            bg="white",
+            image=publisher_img,
+            compound="left",
+        )
         publisher.place(x=20, y=100)
 
-        version_img = PhotoImage(file='resources/version.png')
-        version = Label(window, text=f' Version - {DATA['version']}', font=('Arial', 11), bg='white', image=version_img,
-                        compound='left')
+        version_img = PhotoImage(file="resources/version.png")
+        version = Label(
+            window,
+            text=f" Version - {DATA['version']}",
+            font=("Arial", 11),
+            bg="white",
+            image=version_img,
+            compound="left",
+        )
         version.place(x=20, y=132)
 
         # image the logo
-        logo_img = PhotoImage(file='resources/logo.png')
-        logo = Label(window, image=logo_img, borderwidth=0, bg='white')
+        logo_img = PhotoImage(file="resources/logo.png")
+        logo = Label(window, image=logo_img, borderwidth=0, bg="white")
         logo.place(x=500, y=30)
 
         # buttons actions
-        button_cancel = Label(window, text='Cancel', font=('Arial', 12), bg='#e4e4e4', fg='black', borderwidth=0,
-                              cursor='hand2')
+        button_cancel = Label(
+            window,
+            text="Cancel",
+            font=("Arial", 12),
+            bg="#e4e4e4",
+            fg="black",
+            borderwidth=0,
+            cursor="hand2",
+        )
         button_cancel.place(width=130, height=40, x=350, y=390)
-        button_cancel.bind('<ButtonPress-1>', lambda event: remove_installation())
+        button_cancel.bind("<ButtonPress-1>", lambda event: remove_installation())
 
-        button_install = Label(window, text='Install', font=('Arial', 12), bg='#eb3b00', fg='white', borderwidth=0,
-                               cursor='hand2')
+        button_install = Label(
+            window,
+            text="Install",
+            font=("Arial", 12),
+            bg="#eb3b00",
+            fg="white",
+            borderwidth=0,
+            cursor="hand2",
+        )
         button_install.place(width=130, height=40, x=500, y=390)
-        button_install.bind('<ButtonPress-1>', lambda event: (window.destroy(), install()))
+        button_install.bind(
+            "<ButtonPress-1>", lambda event: (window.destroy(), install())
+        )
 
         # view window
         window.deiconify()
         window.mainloop()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     Main()
