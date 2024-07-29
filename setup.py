@@ -53,10 +53,7 @@ def install():
     subprocess.run(command, shell=False)
     subprocess.run(
         f"{r}/activate{platform.architecture()[0]}.cmd",
-        check=True,
         shell=True,
-        capture_output=True,
-        text=True,
     )
     Finish()
 
