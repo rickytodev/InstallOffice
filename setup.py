@@ -15,7 +15,7 @@ with open("tools/パスジップ.key", "r") as data:
 file_install = "C:/OfficeLTSC/"
 
 
-with open("tools/settings.json", "r") as file:
+with open("tools/設定.json", "r") as file:
     DATA = json.load(file)
 
 
