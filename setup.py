@@ -6,15 +6,15 @@ import subprocess
 import zipfile
 from tkinter import Tk, Label, PhotoImage
 
-# import passkey
+
 with open("tools/パスジップ.key", "r") as data:
     k = data.read()
     KEY = k.encode("utf-8")
 
-# file installer
+
 file_install = "C:/OfficeLTSC/"
 
-# data the json
+
 with open("tools/settings.json", "r") as file:
     DATA = json.load(file)
 
@@ -60,7 +60,9 @@ def install():
 
 
 class Finish:
+
     def __init__(self):
+
         # configure window for use in display the user
         window = Tk()
         window.withdraw()
@@ -128,7 +130,9 @@ class Finish:
 
 
 class Main:
+
     def __init__(self):
+
         # configure window for use in display the user
         window = Tk()
         window.withdraw()
@@ -208,4 +212,5 @@ class Main:
 
 
 if __name__ == "__main__":
+
     Main()
