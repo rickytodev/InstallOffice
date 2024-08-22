@@ -1,4 +1,4 @@
-# Start manual installation whit `cloning repository` 💻
+## Start manual installation whit `cloning repository`
 
 > [!warning]
 > This program is only available for systems with Windows installed.
@@ -24,7 +24,7 @@
    py setup.py
    ```
 
-# Start manual installation whit `download .zip` 📦
+## Start manual installation whit `download .zip`
 
 1. Execute the command in your terminal
 
