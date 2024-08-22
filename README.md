@@ -1,10 +1,10 @@
 # Start manual installation whit `cloning repository` 💻
 
->[!warning]
->This program is only available for systems with Windows installed.
+> [!warning]
+> This program is only available for systems with Windows installed.
 
->[!note]
->Before starting make sure you have [python](https://www.python.org/) and [git](https://git-scm.com/) installed.
+> [!note]
+> Before starting make sure you have [python](https://www.python.org/) and [git](https://git-scm.com/) installed.
 
 1. Clone repository
 
