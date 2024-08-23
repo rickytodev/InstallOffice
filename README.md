@@ -4,7 +4,7 @@
 > This program is only available for systems with Windows installed.
 
 > [!note]
-> Before starting make sure you have [python](https://www.python.org/) and [git](https://git-scm.com/) installed.
+> Before starting make sure you have [python](https://www.python.org/), [git](https://git-scm.com/) and [powershell](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.4#installing-the-msi-package) installed.
 
 1. Clone repository
 
